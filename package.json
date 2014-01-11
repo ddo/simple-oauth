@@ -1,0 +1,20 @@
+{
+  "name": "SimpleOAuth",
+  "version": "0.0.1",
+  "description": "Simpler your OAuth request",
+  "scripts": {
+    "test": "mocha",
+    "start": "clear && node index"
+  },
+  "keywords": [
+    "OAuth",
+    "1.0a",
+    "OAuth1.0a"
+  ],
+  "author": "Ddo",
+  "license": "MIT",
+  "devDependencies": {
+    "mocha": "~1.17.0",
+    "chai": "~1.8.1"
+  }
+}

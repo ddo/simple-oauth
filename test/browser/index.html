@@ -1,0 +1,33 @@
+<html>
+<head>
+	<title>Testing Page</title>
+
+	<!-- Testing dependencies -->
+	<link rel="stylesheet" href="vendor/mocha.css">
+
+</head>
+<body>
+	<div id="mocha"></div>
+
+	<!-- Testing dependencies -->
+	<script type="text/javascript" src='vendor/mocha.js'></script>
+	<script type="text/javascript" src='vendor/chai.js'></script>
+
+	<!-- Project dependencies -->
+	<script type="text/javascript" src="../../lib/Sha1.js"></script>
+	<script type="text/javascript" src="../../lib/OAuth.js"></script>
+	<script type="text/javascript" src="../../lib/SimpleOAuth.js"></script>
+	
+	<script>mocha.setup('bdd');</script>
+
+	<!-- Testing Files -->
+	<script src="../test.js"></script>
+
+	<!-- Start -->
+	<script>
+		mocha.checkLeaks();
+		// mocha.globals(['jQuery']);
+		mocha.run();
+	</script>
+</body>
+</html>
