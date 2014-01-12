@@ -1,11 +1,12 @@
 {
-  "name": "SimpleOAuth",
+  "name": "simple-oauth",
   "version": "0.0.1",
   "description": "Simpler your OAuth request",
   "scripts": {
     "test": "mocha",
     "start": "clear && node index"
   },
+  "repository": "https://github.com/joeddo/SimpleOAuth.git",
   "keywords": [
     "OAuth",
     "1.0a",
