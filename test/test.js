@@ -107,6 +107,27 @@ describe("SimpleOAuth", function() {
         });
     });
 
+    describe("#requestToken with custom data", function() {
+        var result = simple_oauth.requestToken({
+            oauth_callback: 'http://www.ddo.me'
+        });
+
+        it("should return an oauth data object", function() {
+            expect(result).to.be.an('object');
+        });
+
+        it("should return an valid oauth request data", function() {
+            expect(result).to.have.property('url', simple_oauth.url_request_token);
+            expect(result).to.have.property('type', 'POST');
+            expect(result.data).to.have.property('oauth_nonce');
+            expect(result.data).to.have.property('oauth_signature');
+            expect(result.data).to.have.property('oauth_signature_method');
+            expect(result.data).to.have.property('oauth_timestamp');
+            expect(result.data).to.have.property('oauth_version');
+            expect(result.data).to.have.property('oauth_callback', 'http://www.ddo.me');
+        });
+    });
+
     describe("#accessToken", function() {
         var tokens = {
             oauth_token: '<oauth_token>',
