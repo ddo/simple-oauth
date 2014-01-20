@@ -1,7 +1,7 @@
 {
   "name": "simple-oauth",
   "version": "0.0.1",
-  "description": "Simpler your OAuth request",
+  "description": "Simpler Your OAuth request for both Node and Browser",
   "scripts": {
     "test": "mocha",
     "start": "clear && node index"
