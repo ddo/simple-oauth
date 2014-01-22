@@ -1,6 +1,4 @@
 SimpleOAuth
 ===========
 
-Simpler your OAuth request
-
-#Will update document in 24 hours
+Simpler Your OAuth request for both node and browser
