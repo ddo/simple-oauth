@@ -8,13 +8,23 @@ if(typeof(module) !== 'undefined') { //node
 }
 
 describe("SimpleOAuth", function() {
-    var simple_oauth = new SimpleOAuth({
-        consumer_key:       '<consumer_key>',
-        consumer_secret:    '<consumer_secret>',
-        url_request_token:  'https://api.twitter.com/oauth/request_token',
-        url_authorize:      'https://api.twitter.com/oauth/authorize',
-        url_access_token:   'https://api.twitter.com/oauth/access_token'
+    var simple_oauth = SimpleOAuth({
+        consumer: {
+            public: '<consumer_key>',
+            secret: '<consumer_secret>'
+        },
+        url: {
+            request_token: 'https://api.twitter.com/oauth/request_token',
+            authorize: 'https://api.twitter.com/oauth/authorize',
+            access_token: 'https://api.twitter.com/oauth/access_token'
+        }
     });
+
+    // console.log(simple_oauth);
+
+    simple_oauth.test();
+
+    /*
 
     describe("Constructor", function() {
         it("should a object and instance of SimpleOAuth", function() {
@@ -58,73 +68,74 @@ describe("SimpleOAuth", function() {
         });
     });
 
-    describe("#do (core)", function() {
-        var opts = {
+    describe("#do", function() {
+        var request_data = {
             url: 'https://api.twitter.com/oauth/request_token',
-            type: 'GET',
-            tokens: {
-                oauth_token: '<oauth_token>',
-                oauth_token_secret: '<oauth_token_secret>'
-            },
+            method: 'GET',
             data: {
                 a: 'a',
                 b: 'b'
             }
         };
 
-        var result = simple_oauth.do(opts);
+        var tokens = {
+            oauth_token: '<oauth_token>',
+            oauth_token_secret: '<oauth_token_secret>'
+        };
 
-        it("should return an oauth data object", function() {
-            expect(result).to.be.an('object');
+        request_data = simple_oauth.do(request_data, tokens);
+
+        it("should be an data object", function() {
+            expect(request_data).to.be.an('object');
         });
 
-        it("should return an valid oauth request data", function() {
-            expect(result).to.have.property('oauth_consumer_key');
-            expect(result).to.have.property('oauth_nonce');
-            expect(result).to.have.property('oauth_signature');
-            expect(result).to.have.property('oauth_signature_method');
-            expect(result).to.have.property('oauth_timestamp');
-            expect(result).to.have.property('oauth_version');
-            expect(result).to.have.property('oauth_token');
+        it("request_data.data should be an valid oauth request data", function() {
+            expect(request_data.data).to.have.property('oauth_consumer_key');
+            expect(request_data.data).to.have.property('oauth_nonce');
+            expect(request_data.data).to.have.property('oauth_signature');
+            expect(request_data.data).to.have.property('oauth_signature_method');
+            expect(request_data.data).to.have.property('oauth_timestamp');
+            expect(request_data.data).to.have.property('oauth_version');
+            expect(request_data.data).to.have.property('oauth_token');
         });
     });
 
     describe("#requestToken", function() {
-        var result = simple_oauth.requestToken();
+        var request_data = simple_oauth.requestToken();
 
-        it("should return an oauth data object", function() {
-            expect(result).to.be.an('object');
+        it("should be an oauth data object", function() {
+            expect(request_data).to.be.an('object');
         });
 
-        it("should return an valid oauth request data", function() {
-            expect(result).to.have.property('url', simple_oauth.url_request_token);
-            expect(result).to.have.property('type', 'POST');
-            expect(result.data).to.have.property('oauth_nonce');
-            expect(result.data).to.have.property('oauth_signature');
-            expect(result.data).to.have.property('oauth_signature_method');
-            expect(result.data).to.have.property('oauth_timestamp');
-            expect(result.data).to.have.property('oauth_version');
+        it("request_data.data should be an valid oauth request data", function() {
+            expect(request_data).to.have.property('url', simple_oauth.url_request_token);
+            expect(request_data).to.have.property('method', 'POST');
+            expect(request_data.data).to.have.property('oauth_nonce');
+            expect(request_data.data).to.have.property('oauth_signature');
+            expect(request_data.data).to.have.property('oauth_signature_method');
+            expect(request_data.data).to.have.property('oauth_timestamp');
+            expect(request_data.data).to.have.property('oauth_version');
         });
     });
 
     describe("#requestToken with custom data", function() {
-        var result = simple_oauth.requestToken({
+        var request_data = simple_oauth.requestToken({
             oauth_callback: 'http://www.ddo.me'
         });
 
-        it("should return an oauth data object", function() {
-            expect(result).to.be.an('object');
+        it("should be an oauth data object", function() {
+            expect(request_data).to.be.an('object');
         });
 
-        it("should return an valid oauth request data", function() {
-            expect(result).to.have.property('url', simple_oauth.url_request_token);
-            expect(result).to.have.property('type', 'POST');
-            expect(result.data).to.have.property('oauth_nonce');
-            expect(result.data).to.have.property('oauth_signature');
-            expect(result.data).to.have.property('oauth_signature_method');
-            expect(result.data).to.have.property('oauth_timestamp');
-            expect(result.data).to.have.property('oauth_version');
-            expect(result.data).to.have.property('oauth_callback', 'http://www.ddo.me');
+        it("request_data.data should be an valid oauth request data", function() {
+            expect(request_data).to.have.property('url', simple_oauth.url_request_token);
+            expect(request_data).to.have.property('method', 'POST');
+            expect(request_data.data).to.have.property('oauth_nonce');
+            expect(request_data.data).to.have.property('oauth_signature');
+            expect(request_data.data).to.have.property('oauth_signature_method');
+            expect(request_data.data).to.have.property('oauth_timestamp');
+            expect(request_data.data).to.have.property('oauth_version');
+            expect(request_data.data).to.have.property('oauth_callback', 'http://www.ddo.me');
         });
     });
 
@@ -136,24 +147,24 @@ describe("SimpleOAuth", function() {
 
         var oauth_verifier = '<oauth_verifier>';
 
-        var result = simple_oauth.accessToken(tokens, oauth_verifier);
+        var request_data = simple_oauth.accessToken(tokens, oauth_verifier);
 
-        it("should return an oauth data object", function() {
-            expect(result).to.be.an('object');
+        it("should be an oauth data object", function() {
+            expect(request_data).to.be.an('object');
         });
 
-        it("should return an valid oauth request data", function() {
-            expect(result).to.have.property('url', simple_oauth.url_access_token);
-            expect(result).to.have.property('type', 'POST');
-            expect(result.data).to.have.property('oauth_consumer_key');
-            expect(result.data).to.have.property('oauth_nonce');
-            expect(result.data).to.have.property('oauth_signature');
-            expect(result.data).to.have.property('oauth_signature_method');
-            expect(result.data).to.have.property('oauth_timestamp');
-            expect(result.data).to.have.property('oauth_version');
-            expect(result.data).to.have.property('oauth_token');
-            expect(result.data).to.have.property('oauth_verifier');
+        it("request_data.data should be an valid oauth request data", function() {
+            expect(request_data).to.have.property('url', simple_oauth.url_access_token);
+            expect(request_data).to.have.property('method', 'POST');
+            expect(request_data.data).to.have.property('oauth_consumer_key');
+            expect(request_data.data).to.have.property('oauth_nonce');
+            expect(request_data.data).to.have.property('oauth_signature');
+            expect(request_data.data).to.have.property('oauth_signature_method');
+            expect(request_data.data).to.have.property('oauth_timestamp');
+            expect(request_data.data).to.have.property('oauth_version');
+            expect(request_data.data).to.have.property('oauth_token');
+            expect(request_data.data).to.have.property('oauth_verifier');
         });
     });
-    
+    */
 });
