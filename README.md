@@ -1,4 +1,4 @@
-SimpleOAuth
+simple-oauth
 ===========
 
 Simpler Your OAuth request for both node and browser
